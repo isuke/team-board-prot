@@ -1,0 +1,26 @@
+<% provide(:title, "New Article") %>
+
+<%= form_tag articles_path do %>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <%= label_tag :title %>
+      </span>
+      <%= text_field_tag :title, nil, class: "form-control" %>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <%= text_area_tag :content, nil, rows: 20, class: "form-control" %>
+      </div>
+      <div class="col-sm-6">
+        <p>
+          TODO
+          formatd content in this area.
+        </p>
+      </div>
+    </div>
+    <%= submit_tag "Create", class: "btn btn-large btn-primary" %>
+  </div>
+<% end %>
+

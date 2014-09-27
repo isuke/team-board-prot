@@ -1,0 +1,21 @@
+<% provide(:title, "Articles") %>
+
+<h2>Articles</h2>
+
+<%= link_to "Create Article",
+            new_article_path,
+            class: "btn bnt-xs btn-primary" %>
+
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Updated date</th>
+  </tr>
+  <% @articles.order("updated_at").reverse_order.each do |article| %>
+    <tr>
+      <td><%= link_to article.title, article %></td>
+      <td><%= article.updated_at.strftime('%m-%d %H:%M') %></td>
+    </tr>
+  <% end %>
+
+</table>

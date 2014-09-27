@@ -1,0 +1,29 @@
+<% provide(:title, "#{@article_log.title} Edit") %>
+
+<%= form_tag(article_path, action: 'update', method: 'patch') do %>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <%= label_tag :title %>
+      </span>
+      <%= text_field_tag :title, @article_log.title, class: "form-control" %>
+    </div>
+
+    <div class="article-content">
+      <div class="row">
+        <div class="col-sm-6">
+          <%= text_area_tag :content,
+                            @article_log.content,
+                            class: "form-control" %>
+        </div>
+        <div class="col-sm-6">
+          <div class="formated">
+            <%= markdown @article_log.content %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= submit_tag "Save", class: "btn btn-large btn-primary" %>
+  </div>
+<% end %>
+

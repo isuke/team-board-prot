@@ -1,0 +1,8 @@
+<% provide(:title, @article_log.title) %>
+
+<h2><%= @article_log.title%></h2>
+<h4><small>It was written in</small> '<%= format_time @article_log.created_at %>'</h4>
+
+<hr>
+
+<p><%= markdown @article_log.content %></p>
