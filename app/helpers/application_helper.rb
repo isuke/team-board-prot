@@ -1,2 +1,23 @@
 module ApplicationHelper
+  def full_title(page_title="")
+    base_title = "Team Boad Prototype"
+    if page_title.empty?
+      base_title
+    else
+      "#{base_title} | #{page_title}"
+    end
+  end
+
+  def format_time(time)
+    time.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')
+  end
+
+  def markdown(text)
+    renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
+    markdown = Redcarpet::Markdown.new(renderer, tables: true,
+                                           fenced_code_blocks: true,
+                                           autolink: true,
+                                           strikethrough: true)
+    markdown.render(text).html_safe
+  end
 end

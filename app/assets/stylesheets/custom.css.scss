@@ -1,0 +1,14 @@
+@import "bootstrap";
+
+
+.article-content {
+  textarea {
+    height: 400px !important; /* TODO */
+    overflow: auto;
+  }
+
+  .formated {
+    height: 400px;
+    overflow: auto;
+  }
+}

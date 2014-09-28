@@ -1,0 +1,23 @@
+<% provide(:title, "Article Logs") %>
+
+<h2>Article Logs</h2>
+
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Updated date</th>
+  </tr>
+  <% @article_logs.order("created_at").reverse_order.each do |article_logs| %>
+    <tr>
+      <td>
+        <%= link_to article_log_path(article_logs.article, article_logs) do %>
+          <%= truncate(article_logs.title, length: 30) %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to article_log_path(article_logs.article, article_logs) do %>
+          <%= format_time article_logs.created_at %>
+        <% end %>
+      </td>
+  <% end %>
+</table>

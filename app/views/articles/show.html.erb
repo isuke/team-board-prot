@@ -1,0 +1,11 @@
+<% provide(:title, @article.title) %>
+
+<h2><%= @article.title%></h2>
+
+<%= link_to "Edit", edit_article_path(@article), class: "btn bnt-xs btn-primary" %>
+<%= link_to "Show Logs", article_logs_path(@article), class: "btn bnt-xs btn-defalut" %>
+
+<hr>
+
+<p><%= markdown @article.content %></p>
+
