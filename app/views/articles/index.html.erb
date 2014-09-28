@@ -10,11 +10,20 @@
   <tr>
     <th>Title</th>
     <th>Updated date</th>
+    <th></th>
   </tr>
   <% @articles.order("updated_at").reverse_order.each do |article| %>
     <tr>
       <td><%= link_to article.title, article %></td>
       <td><%= article.updated_at.strftime('%m-%d %H:%M') %></td>
+      <td>
+        <%= link_to article,
+                    method: :delete,
+                    data: { confirm: "You sure?" },
+                    class: "btn btn-xs btn-warning" do %>
+          <span class="glyphicon glyphicon-remove"></span>Delete
+        <% end %>
+      </td>
     </tr>
   <% end %>
 

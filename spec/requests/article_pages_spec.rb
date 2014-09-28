@@ -14,6 +14,8 @@ describe "Article Pages" do
     it { should have_link("Create Article") }
     it { should have_link(article1.title) }
     it { should have_link(article2.title) }
+    it { should have_link("Delete") }
+
 
     context "when click the Create Article link" do
       before { click_link("Create Article") }
@@ -25,6 +27,12 @@ describe "Article Pages" do
       before { click_link(article1.title) }
 
       it { should have_title(article1.title) }
+    end
+
+    context "when click the Delete link" do
+      it "should delete the article" do
+        expect{ click_link "Delete", match: :first }.to change(Article, :count).by(-1)
+      end
     end
   end
 
@@ -65,6 +73,26 @@ describe "Article Pages" do
     it { should have_content(article.content) }
     it { should have_link("Edit") }
     it { should have_link("Show Logs") }
+    it { should have_link("Delete") }
+
+    context "when click the Edit link" do
+      before { click_link "Edit" }
+
+      it { should have_title(article.title) }
+    end
+
+    context "when click the Show Logs link" do
+      before { click_link "Show Logs" }
+
+      it { should have_title("Article Logs") }
+    end
+
+    context "when click the Delete link" do
+      it "should delete the article" do
+        expect{ click_link "Delete" }.to change(Article, :count).by(-1)
+      end
+    end
+
   end
 
   describe "edit" do

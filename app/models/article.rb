@@ -1,5 +1,5 @@
 class Article < ActiveRecord::Base
-  has_many :logs, class_name: "ArticleLog"
+  has_many :logs, class_name: "ArticleLog", dependent: :destroy
 
   def latest_log
     logs.order("created_at DESC").first
