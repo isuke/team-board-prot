@@ -30,7 +30,6 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article_log = @article.logs.build(params.permit(:title, :content))
     if @article_log.save
-      @article.touch
       flash[:success] = "Save Article '#{@article.title}'."
       redirect_to article_path @article
     else
@@ -39,6 +38,10 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    # TODO
+    article = Article.find(params[:id])
+    title = article.title
+    article.destroy
+    flash[:success] = "'#{title}'' deleted."
+    redirect_to articles_path
   end
 end

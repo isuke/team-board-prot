@@ -2,8 +2,10 @@
 
 <h2><%= @article.title%></h2>
 
-<%= link_to "Edit", edit_article_path(@article), class: "btn bnt-xs btn-primary" %>
+<%= link_to "Edit"     , edit_article_path(@article), class: "btn bnt-xs btn-primary" %>
 <%= link_to "Show Logs", article_logs_path(@article), class: "btn bnt-xs btn-defalut" %>
+<%= link_to "Delete"   , @article                   , class: "btn bnt-xs btn-warning",
+            method: :delete, data: { confirm: "You sure?" } %>
 
 <hr>
 

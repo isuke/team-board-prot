@@ -13,4 +13,12 @@ describe Article do
   its(:title)   { should eq article.latest_log.title }
   its(:content) { should eq article.latest_log.content }
 
+  context "when deleted" do
+    let!(:logs_count) { article.logs.count }
+
+    it "should delete its logs" do
+      expect{ article.destroy }.to change(ArticleLog, :count).by(-logs_count)
+    end
+  end
+
 end

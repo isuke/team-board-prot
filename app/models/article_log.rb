@@ -1,5 +1,5 @@
 class ArticleLog < ActiveRecord::Base
-  belongs_to :article
+  belongs_to :article, touch: true
 
   validates :article_id, presence: true,
                          uniqueness: { scope: :created_at }
