@@ -20,4 +20,8 @@ module ApplicationHelper
                                            strikethrough: true)
     markdown.render(text).html_safe
   end
+
+  def diff(text1, text2)
+    Diffy::Diff.new(text1, text2, include_plus_and_minus_in_html: true).to_s
+  end
 end

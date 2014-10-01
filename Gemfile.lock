@@ -53,6 +53,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     diff-lcs (1.2.5)
+    diffy (3.0.6)
     erubis (2.7.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -180,6 +181,7 @@ DEPENDENCIES
   bootstrap-sass
   capybara!
   coffee-rails (~> 4.0.0)
+  diffy
   factory_girl_rails
   faker
   jbuilder (~> 2.0)

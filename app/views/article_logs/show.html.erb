@@ -1,8 +1,15 @@
 <% provide(:title, @article_log.title) %>
 
 <h2><%= @article_log.title%></h2>
-<h4><small>It was written in</small> '<%= format_time @article_log.created_at %>'</h4>
+<h4><small>It was written in '<%= format_time @article_log.created_at %>'</small></h4>
+
+<% if @article_log.prev %>
+  <%= link_to "History",
+              diff_article_logs_path(id1: @article_log.prev,
+                                     id2: @article_log),
+              class: "btn bnt-xs btn-primary" %>
+<% end %>
 
 <hr>
 
-<p><%= markdown @article_log.content %></p>
+<%= markdown @article_log.content %>
