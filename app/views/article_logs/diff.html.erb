@@ -1,0 +1,24 @@
+<% provide(:title, "#{format_time @left_article_log.created_at} vs #{format_time @right_article_log.created_at}") %>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h2><%= @left_article_log.title%></h2>
+    <h4><small>It was written in '<%= format_time @left_article_log.created_at %>'</small></h4>
+  </div>
+  <div class="col-sm-6">
+    <h2><%= @right_article_log.title%></h2>
+    <h4><small>It was written in '<%= format_time @right_article_log.created_at %>'</small></h4>
+  </div>
+</div>
+
+<hr>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Diff between the latest</h3>
+  </div>
+  <div class="panel-body">
+    <%= raw diff(@left_article_log.content,@right_article_log.content) %>
+  </div>
+</div>
+

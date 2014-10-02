@@ -35,6 +35,8 @@ gem 'bootstrap-sass'
 
 gem 'redcarpet'
 
+gem 'diffy'
+
 # gem 'knockoutjs-rails'
 
 group :development, :test do

@@ -5,11 +5,11 @@ class ArticleLog < ActiveRecord::Base
                          uniqueness: { scope: :created_at }
   validates :title     , presence: true
 
-  after_save :update_article
+  def next
+    self.article.logs.where("created_at > ?", self.created_at).order(:created_at).first
+  end
 
-  private
-
-  def update_article
-    self.article.touch
+  def prev
+    self.article.logs.where("created_at < ?", self.created_at).order(:created_at).last
   end
 end
