@@ -1,17 +1,15 @@
 Rails.application.routes.draw do
 
   resources :articles do
+
     collection do
-      resources :article_logs, only: [:show, :new] do
-        collection do
-          get 'diff/:id1/:id2' => 'article_logs#diff', as: :diff
-          get 'diff'           => 'article_logs#diff'
-        end
-      end
+      resources :logs, controller: :article_logs, as: :article_logs,  only: [:show]
+      get ':id1/:id2/diff' => 'article_logs#diff', as: :diff
+      get 'diff'           => 'article_logs#diff'
     end
 
     member do
-      resources :article_logs, only: [:index]
+      resources :logs, controller: :article_logs, as: :article_logs, only: [:index]
     end
   end
 

@@ -13,6 +13,7 @@ module ApplicationHelper
   end
 
   def markdown(text)
+    return '' if text.blank?
     renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
     markdown = Redcarpet::Markdown.new(renderer, tables: true,
                                            fenced_code_blocks: true,

@@ -47,8 +47,8 @@ describe "Article Pages" do
       let(:article_content) { "# Example Content" }
 
       before do
-        fill_in "title"  , with: article_title
-        fill_in "content", with: article_content
+        fill_in "Title"  , with: article_title
+        fill_in "Content", with: article_content
       end
 
       it "should create a article" do
@@ -72,6 +72,7 @@ describe "Article Pages" do
     it { should have_content(article.title) }
     it { should have_content(article.content) }
     it { should have_link("Edit") }
+    it { should have_link("History") }
     it { should have_link("Show Logs") }
     it { should have_link("Delete") }
 
@@ -79,6 +80,12 @@ describe "Article Pages" do
       before { click_link "Edit" }
 
       it { should have_title(article.title) }
+    end
+
+    context "when click the History link" do
+      before { click_link "History" }
+
+      it { should have_title "vs" }
     end
 
     context "when click the Show Logs link" do
@@ -96,7 +103,7 @@ describe "Article Pages" do
   end
 
   describe "edit" do
-    let!(:article) { FactoryGirl.create(:article) }
+    let(:article) { FactoryGirl.create(:article) }
 
     before { visit edit_article_path article }
 
@@ -105,11 +112,11 @@ describe "Article Pages" do
 
     context "when the save button click" do
       let(:article_title)   { "Example Title" }
-      let(:article_content) { "# Example Content" }
+      let(:article_content) { "Example Content" }
 
       before do
-        fill_in "title"  , with: article_title
-        fill_in "content", with: article_content
+        fill_in "Title"  , with: article_title
+        fill_in "Content", with: article_content
       end
 
       it "should save the article" do
@@ -121,10 +128,8 @@ describe "Article Pages" do
       context "after save the article" do
         before { click_button "Save" }
 
-        it "should update article" do
-          expect(article.title).to eq article_title
-          expect(article.content).to eq article_content
-        end
+        it { should have_title(article_title) }
+        it { should have_content(article_content) }
       end
     end
 

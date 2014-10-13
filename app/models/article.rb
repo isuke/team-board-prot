@@ -1,11 +1,7 @@
 class Article < ActiveRecord::Base
-  has_many :logs, class_name: "ArticleLog", dependent: :destroy
+  include HasLogs
 
-  def latest_log
-    logs.order(:created_at).last
-  end
+  has_logs [:title, :content], class_name: 'ArticleLog', dependent: :destroy
 
-  def method_missing(method, *args)
-    self.latest_log.send(method, *args)
-  end
+  validates :title, presence: true
 end

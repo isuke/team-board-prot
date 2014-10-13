@@ -12,28 +12,28 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      @article = Article.create
-      @article.logs.build(params.permit(:title, :content)).save!
+    @article = Article.new(article_log_params)
+    if @article.save
+      flash[:success] = "Create '#{@article.title}'"
+      redirect_to @article
+    else
+      flash[:danger] = "create error" # TODO
+      render 'new'
     end
-    flash[:success] = "Create '#{@article.title}'"
-    redirect_to @article
-  rescue
-    render 'new'
   end
 
   def edit
-    @article_log = Article.find(params[:id]).latest_log.dup
+    @article = Article.find(params[:id])
   end
 
   def update
     @article = Article.find(params[:id])
-    @article_log = @article.logs.build(params.permit(:title, :content))
-    if @article_log.save
+    if @article.update_attributes(article_log_params)
       flash[:success] = "Save Article '#{@article.title}'."
       redirect_to article_path @article
     else
-      render 'show'
+      flash[:danger] = "edit error" # TODO
+      render 'edit'
     end
   end
 
@@ -44,4 +44,11 @@ class ArticlesController < ApplicationController
     flash[:success] = "'#{title}'' deleted."
     redirect_to articles_path
   end
+
+  private
+
+    def article_log_params
+      params.require(:article).permit(:title, :content)
+    end
+
 end

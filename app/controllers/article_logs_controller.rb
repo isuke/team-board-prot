@@ -6,7 +6,7 @@ class ArticleLogsController < ApplicationController
 
   def show
     @article_log = ArticleLog.find(params[:id])
-    @latest_article_log = @article_log.article.latest_log
+    @latest_article_log = @article_log.originator.latest_log
   end
 
   def diff
@@ -14,9 +14,4 @@ class ArticleLogsController < ApplicationController
     @right_article_log = ArticleLog.find(params[:id2])
   end
 
-  private
-
-    def article_log_params
-      params.require(:article_log).permit(:title, :content)
-    end
 end

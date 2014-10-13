@@ -35,7 +35,7 @@ describe "Article Log Pages" do
 
 
   describe "show" do
-    let!(:article_log) { FactoryGirl.create(:article_log) }
+    let!(:article_log) { FactoryGirl.create(:article).latest_log }
 
     before { visit article_log_path(article_log) }
 
@@ -55,7 +55,7 @@ describe "Article Log Pages" do
     let!(:left_article_log)  { article.logs[0] }
     let!(:right_article_log) { article.logs[1] }
 
-    before { visit diff_article_logs_path(left_article_log, right_article_log) }
+    before { visit diff_articles_path(left_article_log, right_article_log) }
 
     it do
       should have_title("#{left_article_log.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')} vs #{right_article_log.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')}")
