@@ -8,15 +8,9 @@ end
 def make_articles(num)
   puts "make articles"
   num.times do |n|
-    article = Article.create
-    make_article_logs(article, 3)
-  end
-end
-
-def make_article_logs(article, num)
-  num.times do |n|
-    title = "Title-#{article.id}-#{n}"
-    content = Faker::Lorem.paragraph(5)
-    article.logs.create(title: title, content: content)
+    article = Article.create!(title: "Title-#{n}-0", content: Faker::Lorem.paragraph(5))
+    2.times do |m|
+      article.update_attributes!(title: "Title-#{n}-#{m+1}", content: Faker::Lorem.paragraph(5))
+    end
   end
 end

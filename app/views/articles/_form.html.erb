@@ -1,0 +1,20 @@
+<div class="input-group">
+  <span class="input-group-addon">
+    <%= f.label :title %>
+  </span>
+  <%= f.text_field :title, class: "form-control" %>
+</div>
+
+<div class="article-content">
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.label :content, hidden: true %>
+      <%= f.text_area :content, class: "form-control" %>
+    </div>
+    <div class="col-sm-6">
+      <div class="formated">
+        <%= markdown @article.content %>
+      </div>
+    </div>
+  </div>
+</div>
