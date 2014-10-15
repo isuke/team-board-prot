@@ -41,6 +41,7 @@ describe "Article Pages" do
 
     it { should have_title("New Article") }
     it { should have_button("Create") }
+    it { should have_button("Preview") }
 
     context "when click the save button" do
       let(:article_title)   { "Example Title" }
@@ -60,6 +61,18 @@ describe "Article Pages" do
 
         it { should have_title(article_title) }
       end
+    end
+
+    context "when click the preview button" do
+      let(:article_content) { "# Example Content" }
+
+      before do
+        fill_in "Content", with: article_content
+        click_button "Preview"
+      end
+
+      it { should have_title("New Article") }
+      it { should have_selector('h1', text: "Example Content") }
     end
   end
 
@@ -107,8 +120,9 @@ describe "Article Pages" do
 
     before { visit edit_article_path article }
 
-    it { should have_title(article.title) }
+    it { should have_title("#{article.title} Edit") }
     it { should have_button("Save") }
+    it { should have_button("Preview") }
 
     context "when the save button click" do
       let(:article_title)   { "Example Title" }
@@ -133,5 +147,17 @@ describe "Article Pages" do
       end
     end
 
+    context "when click the preview button" do
+      let(:article_content) { "# Example Content" }
+
+      before do
+        fill_in "Content", with: article_content
+        click_button "Preview"
+      end
+
+      it { should have_title("#{article.title} Edit") }
+      it { should have_selector('h1', text: "Example Content") }
+    end
   end
+
 end

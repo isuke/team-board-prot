@@ -1,7 +1,9 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
-    make_articles(10)
+    ActiveRecord::Base.transaction do
+      make_articles(10)
+    end
   end
 end
 
