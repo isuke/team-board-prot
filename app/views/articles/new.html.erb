@@ -1,9 +1,6 @@
 <% provide(:title, "New Article") %>
 
 <%= form_for @article do |f| %>
-  <div class="form-group">
-    <%= render 'form', f: f %>
-    <%= f.submit "Create", class: "btn btn-large btn-primary" %>
-  </div>
+  <%= render 'shared/error_messages', f: f %>
+  <%= render 'form', f: f, action_name: "Create" %>
 <% end %>
-

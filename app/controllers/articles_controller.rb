@@ -13,11 +13,10 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_log_params)
-    if @article.save
+    if !params["preview"] && @article.save
       flash[:success] = "Create '#{@article.title}'"
       redirect_to @article
     else
-      flash[:danger] = "create error" # TODO
       render 'new'
     end
   end
@@ -28,11 +27,11 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-    if @article.update_attributes(article_log_params)
+    @article.attributes = article_log_params
+    if !params["preview"] && @article.save
       flash[:success] = "Save Article '#{@article.title}'."
       redirect_to article_path @article
     else
-      flash[:danger] = "edit error" # TODO
       render 'edit'
     end
   end

@@ -1,20 +1,33 @@
-<div class="input-group">
-  <span class="input-group-addon">
-    <%= f.label :title %>
-  </span>
-  <%= f.text_field :title, class: "form-control" %>
-</div>
-
-<div class="article-content">
-  <div class="row">
-    <div class="col-sm-6">
-      <%= f.label :content, hidden: true %>
-      <%= f.text_area :content, class: "form-control" %>
-    </div>
-    <div class="col-sm-6">
-      <div class="formated">
-        <%= markdown @article.content %>
+<div class="form-group">
+  <div class="input-group">
+    <span class="input-group-addon">
+      <%= f.label :title %>
+    </span>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div class="article-content">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="content">
+          <%= f.label :content, hidden: true %>
+          <%= f.text_area :content, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="formated">
+          <%= f.label :formated, hidden: true %>
+          <%= markdown @article.content %>
+        </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.submit action_name, class: "btn btn-large btn-primary" %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.submit "Preview", class: "btn btn-large btn-primary", name: "preview" %>
+    </div>
+  </div>
 </div>
+
