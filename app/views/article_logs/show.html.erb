@@ -1,7 +1,12 @@
 <% provide(:title, @article_log.title) %>
 
 <h2><%= @article_log.title%></h2>
-<h4><small>It was written in '<%= format_time @article_log.created_at %>'</small></h4>
+<h4><small>
+  It was written in '<%= format_time @article_log.created_at %>'
+  by <%= render 'users/link', user: @article_log.user, show_img: false %>
+</small></h4>
+
+<hr>
 
 <% if @article_log.prev %>
   <%= link_to "History",

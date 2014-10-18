@@ -15,6 +15,7 @@ describe Article do
   it { should_not respond_to(:updated_at) }
   it { should     respond_to(:next) }
   it { should     respond_to(:prev) }
+  it { should     respond_to(:user) }
 
   its(:originator) { should eq originator }
 end

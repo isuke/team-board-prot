@@ -25,6 +25,10 @@ module HasLogs
     logs.order(:created_at).last
   end
 
+  def oldest_log
+    logs.order(:created_at).first
+  end
+
   def create_log
     values = {}
     HasLogs.attrs.each do |attr|

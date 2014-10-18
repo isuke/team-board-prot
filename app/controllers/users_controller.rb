@@ -21,9 +21,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
-    redirect_to home_url
+    user = User.find(params[:id])
+    if current_user?(user)
+      user.destroy
+      flash[:success] = "User destroyed."
+      redirect_to home_url
+    else
+      render 'show'
+    end
   end
 
   private

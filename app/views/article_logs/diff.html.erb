@@ -3,11 +3,17 @@
 <div class="row">
   <div class="col-sm-6">
     <h2><%= @left_article_log.title%></h2>
-    <h4><small>It was written in '<%= format_time @left_article_log.created_at %>'</small></h4>
+    <h4><small>
+      It was written in '<%= format_time @left_article_log.created_at %>'
+      by <%= render 'users/link', user: @left_article_log.user, show_img: false %>
+    </small></h4>
   </div>
   <div class="col-sm-6">
     <h2><%= @right_article_log.title%></h2>
-    <h4><small>It was written in '<%= format_time @right_article_log.created_at %>'</small></h4>
+    <h4><small>
+      It was written in '<%= format_time @right_article_log.created_at %>'
+      by <%= render 'users/link', user: @right_article_log.user, show_img: false %>
+    </small></h4>
   </div>
 </div>
 

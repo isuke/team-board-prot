@@ -5,7 +5,7 @@ describe "Article Log Pages" do
 
   describe "index" do
     let!(:user)         { FactoryGirl.create(:user) }
-    let!(:article)      { FactoryGirl.create(:article) }
+    let!(:article)      { FactoryGirl.create(:article, user: user) }
     let!(:article_log1) { article.logs[0] }
     let!(:article_log2) { article.logs[1] }
     let!(:article_log3) { article.logs[2] }
@@ -39,7 +39,7 @@ describe "Article Log Pages" do
 
   describe "show" do
     let!(:user)        { FactoryGirl.create(:user) }
-    let!(:article_log) { FactoryGirl.create(:article).latest_log }
+    let!(:article_log) { FactoryGirl.create(:article, user: user).latest_log }
 
     before do
       login user
@@ -48,6 +48,7 @@ describe "Article Log Pages" do
 
     it { should have_title(article_log.title) }
     it { should have_content(article_log.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
+    it { should have_link("You") }
     it { should have_link("History") }
 
     context "when click the History button" do
@@ -59,7 +60,7 @@ describe "Article Log Pages" do
 
   describe "diff" do
     let!(:user)    { FactoryGirl.create(:user) }
-    let!(:article) { FactoryGirl.create(:article) }
+    let!(:article) { FactoryGirl.create(:article, user: user) }
     let!(:left_article_log)  { article.logs[0] }
     let!(:right_article_log) { article.logs[1] }
 
