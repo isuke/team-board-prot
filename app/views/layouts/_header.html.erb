@@ -1,13 +1,25 @@
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li>
-                <%= link_to root_path do %>
-                  <p class="glyphicon glyphicon-home"> Home</p>
-                <% end %>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<div class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to root_path do %>
+            <p class="glyphicon glyphicon-home"> Top</p>
+          <% end %>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_login? %>
+          <li>
+            <%= link_to user_path(current_user) do %>
+              <%= gravatar_for current_user %> <%= current_user.name %>
+            <% end %>
+          </li>
+          <li><%= link_to "Log out", logout_path, method: :delete %></li>
+        <% else %>
+          <li><%= link_to "Log in", login_path %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

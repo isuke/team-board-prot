@@ -1,0 +1,11 @@
+<% provide(:title) %>
+
+<div class="jumbotron center">
+  <h1>Team Board <small>(Prot)</small></h1>
+  <p>Wellcome</p>
+  <% unless user_login? %>
+    <%= link_to "Sign up now!",
+                signup_path,
+                class: "btn btn-lg btn-primary" %>
+  <% end %>
+</div>

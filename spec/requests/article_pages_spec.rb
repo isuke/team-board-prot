@@ -4,11 +4,14 @@ describe "Article Pages" do
   subject { page }
 
   describe "index" do
-
+    let!(:user)     { FactoryGirl.create(:user) }
     let!(:article1) { FactoryGirl.create(:article) }
     let!(:article2) { FactoryGirl.create(:article) }
 
-    before { visit articles_path }
+    before do
+      login user
+      visit articles_path
+    end
 
     it { should have_title("Articles") }
     it { should have_link("Create Article") }
@@ -37,7 +40,12 @@ describe "Article Pages" do
   end
 
   describe "new" do
-    before { visit new_article_path }
+    let!(:user) { FactoryGirl.create(:user) }
+
+    before do
+      login user
+      visit new_article_path
+    end
 
     it { should have_title("New Article") }
     it { should have_button("Create") }
@@ -77,9 +85,13 @@ describe "Article Pages" do
   end
 
   describe "show" do
+    let!(:user)    { FactoryGirl.create(:user) }
     let!(:article) { FactoryGirl.create(:article) }
 
-    before { visit article_path article }
+    before do
+      login user
+      visit article_path article
+    end
 
     it { should have_title(article.title) }
     it { should have_content(article.title) }
@@ -116,9 +128,13 @@ describe "Article Pages" do
   end
 
   describe "edit" do
+    let!(:user)   { FactoryGirl.create(:user) }
     let(:article) { FactoryGirl.create(:article) }
 
-    before { visit edit_article_path article }
+    before do
+      login user
+      visit edit_article_path article
+    end
 
     it { should have_title("#{article.title} Edit") }
     it { should have_button("Save") }
