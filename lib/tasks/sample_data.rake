@@ -23,10 +23,12 @@ end
 
 def make_articles(num)
   puts "make articles"
+  first_user  = User.first
+  second_user = User.second
   num.times do |n|
-    article = Article.create!(title: "Title-#{n}-0", content: Faker::Lorem.paragraph(5))
+    article = Article.create!(title: "Title-#{n}-0", content: Faker::Lorem.paragraph(5), user: first_user)
     2.times do |m|
-      article.update_attributes!(title: "Title-#{n}-#{m+1}", content: Faker::Lorem.paragraph(5))
+      article.update_attributes!(title: "Title-#{n}-#{m+1}", content: Faker::Lorem.paragraph(5), user: second_user)
     end
   end
 end

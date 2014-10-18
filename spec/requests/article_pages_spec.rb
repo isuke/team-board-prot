@@ -4,12 +4,13 @@ describe "Article Pages" do
   subject { page }
 
   describe "index" do
-    let!(:user)     { FactoryGirl.create(:user) }
-    let!(:article1) { FactoryGirl.create(:article) }
-    let!(:article2) { FactoryGirl.create(:article) }
+    let!(:user1)    { FactoryGirl.create(:user) }
+    let!(:user2)    { FactoryGirl.create(:user) }
+    let!(:article1) { FactoryGirl.create(:article, user: user1) }
+    let!(:article2) { FactoryGirl.create(:article, user: user2) }
 
     before do
-      login user
+      login user1
       visit articles_path
     end
 
@@ -18,7 +19,8 @@ describe "Article Pages" do
     it { should have_link(article1.title) }
     it { should have_link(article2.title) }
     it { should have_link("Delete") }
-
+    it { should have_link("You")}
+    it { should have_link(user2.name)}
 
     context "when click the Create Article link" do
       before { click_link("Create Article") }
@@ -36,6 +38,12 @@ describe "Article Pages" do
       it "should delete the article" do
         expect{ click_link "Delete", match: :first }.to change(Article, :count).by(-1)
       end
+    end
+
+    context "when click the user link" do
+      before { click_link "You", match: :first }
+
+      it { should have_title(user1.name) }
     end
   end
 
@@ -86,7 +94,7 @@ describe "Article Pages" do
 
   describe "show" do
     let!(:user)    { FactoryGirl.create(:user) }
-    let!(:article) { FactoryGirl.create(:article) }
+    let!(:article) { FactoryGirl.create(:article, user: user) }
 
     before do
       login user
@@ -100,6 +108,7 @@ describe "Article Pages" do
     it { should have_link("History") }
     it { should have_link("Show Logs") }
     it { should have_link("Delete") }
+    it { should have_link("You")}
 
     context "when click the Edit link" do
       before { click_link "Edit" }
@@ -129,7 +138,7 @@ describe "Article Pages" do
 
   describe "edit" do
     let!(:user)   { FactoryGirl.create(:user) }
-    let(:article) { FactoryGirl.create(:article) }
+    let(:article) { FactoryGirl.create(:article, user: user) }
 
     before do
       login user

@@ -1,14 +1,20 @@
 @import "bootstrap";
+$article-content-height: 400px;
 
+/* Home */
+.center {
+  text-align: center;
+}
 
+/* Article */
 .article-content {
   textarea {
-    height: 400px !important; /* TODO */
+    height: $article-content-height;
     overflow: auto;
   }
 
   .formated {
-    height: 400px;
+    height: $article-content-height;
     overflow: auto;
   }
 }
