@@ -12,8 +12,10 @@ FactoryGirl.define do
     content "Lorem ipsum"
 
     after(:create) do |article|
+      original_title = article.title
       2.times do |i|
-        article.update_attributes!(content: "Lorem ipsum #{i}")
+        article.update_attributes!(title: "#{original_title}-#{i}",
+                                   content: "Lorem ipsum #{i}")
       end
       2.times do |i|
         create(:comment, article: article, user: create(:user))

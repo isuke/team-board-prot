@@ -17,13 +17,13 @@ describe "Article Log Pages" do
 
     it { should have_title("Article Logs") }
     it { should have_content("Article Logs") }
-    it { should have_link(article_log1.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
-    it { should have_link(article_log2.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
-    it { should have_link(article_log3.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
+    it { should have_content(article_log1.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
+    it { should have_content(article_log2.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
+    it { should have_content(article_log3.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
     it { should have_button("Diff") }
 
     context "when click the Create Article link" do
-      before { click_link(article_log2.created_at.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')) }
+      before { click_link(article_log2.title) }
 
       it { should have_title(article_log2.title) }
     end
@@ -35,7 +35,6 @@ describe "Article Log Pages" do
     end
 
   end
-
 
   describe "show" do
     let!(:user)        { FactoryGirl.create(:user) }

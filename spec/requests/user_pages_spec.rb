@@ -47,7 +47,11 @@ describe "User pages" do
   end
 
   describe "profile" do
-    let(:user) { FactoryGirl.create(:user) }
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:article) { FactoryGirl.create(:article, user: user) }
+    let!(:comment) do
+      FactoryGirl.create(:comment, article: article, user: user)
+    end
 
     let(:delete) { "Delete my account" }
 
@@ -66,6 +70,46 @@ describe "User pages" do
         expect do
           click_link(delete)
         end.to change(User, :count).by(-1)
+      end
+      it "should not be able to delete the user's articles" do
+        expect do
+          click_link(delete)
+        end.not_to change(Article, :count)
+      end
+      it "should not be able to delete the user's comments" do
+        expect do
+          click_link(delete)
+        end.not_to change(Comment, :count)
+      end
+
+      context "after delete the user" do
+        let!(:other_user) { FactoryGirl.create(:user) }
+        before do
+          click_link(delete)
+          login other_user
+        end
+
+        describe "the user's articles" do
+          describe "index" do
+            before { visit articles_path }
+            it { should have_content(article.title) }
+            it { should have_content("Unkown") }
+          end
+          describe "show" do
+            before { visit article_path(article) }
+            it { should have_title(article.title) }
+            it { should have_content("Created by Unkown") }
+            it { should have_content("Latest edited by Unkown") }
+          end
+        end
+
+        describe "the user's comments" do
+          describe "index" do
+            before { visit article_path(article) }
+            it { should have_content(article.title) }
+            it { should have_content("Written by Unkown") }
+          end
+        end
       end
     end
 
