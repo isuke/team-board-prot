@@ -10,21 +10,28 @@
         <td>R</td>
         <th>Title</th>
         <th>Updated date</th>
+        <th>Edit user</th>
       </tr>
-      <% @article_logs.order("created_at").reverse_order.each_with_index do |article_logs, i| %>
+      <% @article_logs.order("created_at").reverse_order.each_with_index do |article_log, i| %>
         <tr>
-          <td><%= radio_button_tag 'id1', article_logs.id, nil, {checked: (i == 0) } %></td>
-          <td><%= radio_button_tag 'id2', article_logs.id, nil, {checked: (i == 0) } %></td>
           <td>
-            <%= link_to article_log_path(article_logs) do %>
-              <%= truncate(article_logs.title, length: 30) %>
-            <% end %>
+            <%= radio_button_tag 'id1', article_log.id, nil,
+                                 {checked: (i == 0) } %>
           </td>
           <td>
-            <%= link_to article_log_path(article_logs) do %>
-              <%= format_time article_logs.created_at %>
+            <%= radio_button_tag 'id2', article_log.id, nil,
+                                 {checked: (i == 0) } %>
+          </td>
+          <td>
+            <%= link_to article_log_path(article_log) do %>
+              <%= truncate(article_log.title, length: 30) %>
             <% end %>
           </td>
+          <td><%= format_time article_log.created_at %></td>
+          <td>
+            <%= render 'users/link', user: article_log.user, show_img: false %></td>
+          </td>
+          </tr>
       <% end %>
     </table>
 

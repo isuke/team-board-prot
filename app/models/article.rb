@@ -7,7 +7,6 @@ class Article < ActiveRecord::Base
   has_many :comments, dependent: :destroy
 
   validates :title, presence: true
-  validates :user , presence: true
 
   def create_user
     oldest_log.user

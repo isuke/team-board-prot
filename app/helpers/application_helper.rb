@@ -8,8 +8,12 @@ module ApplicationHelper
     end
   end
 
-  def format_time(time)
-    time.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')
+  def format_time(time, short: false)
+    if short
+      time.strftime('(%Z) %m-%d %H:%M')
+    else
+      time.strftime('(%Z) %Y-%m-%d %H:%M:%S.%L')
+    end
   end
 
   def markdown(text)

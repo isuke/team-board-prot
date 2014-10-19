@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20141018161624) do
     t.string   "title",      null: false
     t.text     "content"
     t.datetime "created_at"
-    t.integer  "user_id",    null: false
+    t.integer  "user_id"
   end
 
   add_index "article_logs", ["article_id", "created_at"], name: "index_article_logs_on_article_id_and_created_at", unique: true
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20141018161624) do
 
   create_table "comments", force: true do |t|
     t.integer  "article_id", null: false
-    t.integer  "user_id",    null: false
+    t.integer  "user_id"
     t.text     "content",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"

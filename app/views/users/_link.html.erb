@@ -1,4 +1,8 @@
-<%= link_to user do %>
-  <%= gravatar_for user if show_img %>
-  <%= pronoun_or_name_for(user) %>
+<% if user.null_user? %>
+  <%= user.name %>
+<% else %>
+  <%= link_to user do %>
+    <%= gravatar_for user if show_img %>
+    <%= pronoun_or_name_for(user) %>
+  <% end %>
 <% end %>
