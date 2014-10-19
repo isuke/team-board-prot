@@ -4,6 +4,7 @@ class Article < ActiveRecord::Base
   has_logs [:title, :content, :user],
            class_name: 'ArticleLog', dependent: :destroy
   belongs_to :user
+  has_many :comments, dependent: :destroy
 
   validates :title, presence: true
   validates :user , presence: true

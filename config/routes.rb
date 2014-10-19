@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     member do
       resources :logs, controller: :article_logs, as: :article_logs, only: [:index]
+      resources :comments, only: :create
     end
   end
 

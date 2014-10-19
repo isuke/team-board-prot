@@ -21,6 +21,8 @@ describe "Article Pages" do
     it { should have_link("Delete") }
     it { should have_link("You")}
     it { should have_link(user2.name)}
+    it { should have_selector("span", article1.comments.count) }
+    it { should have_selector("span", article2.comments.count) }
 
     context "when click the Create Article link" do
       before { click_link("Create Article") }
@@ -108,7 +110,7 @@ describe "Article Pages" do
     it { should have_link("History") }
     it { should have_link("Show Logs") }
     it { should have_link("Delete") }
-    it { should have_link("You")}
+    it { should have_link("You") }
 
     context "when click the Edit link" do
       before { click_link "Edit" }
@@ -131,6 +133,22 @@ describe "Article Pages" do
     context "when click the Delete link" do
       it "should delete the article" do
         expect{ click_link "Delete" }.to change(Article, :count).by(-1)
+      end
+    end
+
+    describe "comments" do
+      it { should have_content("Comments") }
+      it { should have_button("Comment") }
+      it { should have_content(article.comments.first.content) }
+
+      context "when click the comment button" do
+        before do
+          fill_in "Content", with: "Test Comment"
+        end
+
+        it "should add comment" do
+          expect{ click_button "Comment"}.to change(Comment, :count).by(1)
+        end
       end
     end
 

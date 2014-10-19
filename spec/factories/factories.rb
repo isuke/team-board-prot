@@ -15,6 +15,15 @@ FactoryGirl.define do
       2.times do |i|
         article.update_attributes!(content: "Lorem ipsum #{i}")
       end
+      2.times do |i|
+        create(:comment, article: article, user: create(:user))
+      end
     end
+  end
+
+  factory :comment do
+    article
+    user
+    content "Lorem ipsum"
   end
 end

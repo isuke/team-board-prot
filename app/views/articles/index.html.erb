@@ -16,7 +16,10 @@
   </tr>
   <% @articles.order("updated_at").reverse_order.each do |article| %>
     <tr>
-      <td><%= link_to article.title, article %></td>
+      <td>
+        <%= link_to article.title, article %>
+        <span class="badge"><%= article.comments.count %></span>
+      </td>
       <td><%= article.updated_at.strftime('%m-%d %H:%M') %></td>
       <td>
         <%= render 'users/link', user: article.create_user, show_img: true %>
