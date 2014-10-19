@@ -1,0 +1,19 @@
+<% provide(:title, @team.name) %>
+
+<h2><%= @team.name %></h2>
+
+<h3>Member</h3>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+  </tr>
+  <% @team.users.each do |user| %>
+    <tr>
+      <td><%= render 'users/link', user: user, show_img: true %></td>
+      <td><%= user.email %></td>
+    </tr>
+  <% end %>
+
+</table>

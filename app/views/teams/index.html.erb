@@ -1,0 +1,37 @@
+<% provide(:title, "Teams") %>
+
+<h2>Teams</h2>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th></th>
+  </tr>
+  <% @teams.each do |team| %>
+    <tr>
+      <td>
+        <%= link_to team.name, team_path(team) %>
+        <span class="badge"><%= team.users.count %></span>
+      </td>
+      <td>
+        <% if current_user.participate? team %>
+          <%= link_to "Leave", leave_path(team, current_user), method: :delete, class: "btn btn-warning btn-xs" %>
+        <% else %>
+          <%= link_to "Participate", participate_path(team, current_user), method: :post, class: "btn btn-primary btn-xs" %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= form_for(@team, html: {class: "form-horizontal"}) do |f| %>
+  <%= render 'shared/error_messages', f: f %>
+    <div class="input-group">
+      <%= f.label :name, hidden: true %>
+      <%= f.text_field :name, placeholder: "Team name", class: "form-control" %>
+      <span class="input-group-btn">
+        <%= f.submit "Create new team", class: "btn btn-primary" %>
+      </span>
+  </div>
+<% end %>
+
