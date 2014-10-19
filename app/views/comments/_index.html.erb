@@ -1,0 +1,18 @@
+<ul class="media-list">
+  <% comments.each do |comment| %>
+    <li class="comment media">
+      <div class="pull-left">
+        <%= gravatar_for comment.user, size: 40 %>
+      </div>
+      <div class="media-body">
+        <h5 class="media-heading">
+          <small>Written by</small>
+          <%= render 'users/link', user: comment.user, show_img: false %>
+        </h5>
+        <div class="content">
+          <%= markdown comment.content %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>

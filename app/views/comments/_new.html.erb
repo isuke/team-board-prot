@@ -1,0 +1,7 @@
+<%= form_for comment, remote: true do |f| %>
+  <%= render 'shared/error_messages', f: f %>
+  <%= f.label :content, hidden: true %>
+  <%= f.text_area :content %>
+  <br>
+  <%= f.submit "Comment", class: "btn btn-primary" %>
+<% end %>

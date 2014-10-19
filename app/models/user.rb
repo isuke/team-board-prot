@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   has_secure_password
 
   # has_many :articles # can not write this, because a article have not user_id.
-  has_many :article_logs
+  has_many :article_logs # TODO: when destroy user
+  has_many :comments     # TODO: when destroy user
 
   before_save { email.downcase! }
   before_create :create_remember_token
