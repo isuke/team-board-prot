@@ -3,58 +3,14 @@ require 'rails_helper'
 describe "Article Pages" do
   subject { page }
 
-  describe "index" do
-    let!(:user1)    { FactoryGirl.create(:user) }
-    let!(:user2)    { FactoryGirl.create(:user) }
-    let!(:article1) { FactoryGirl.create(:article, user: user1) }
-    let!(:article2) { FactoryGirl.create(:article, user: user2) }
-
-    before do
-      login user1
-      visit articles_path
-    end
-
-    it { should have_title("Articles") }
-    it { should have_link("Create Article") }
-    it { should have_link(article1.title) }
-    it { should have_link(article2.title) }
-    it { should have_link("Delete") }
-    it { should have_link("You")}
-    it { should have_link(user2.name)}
-    it { should have_selector("span", article1.comments.count) }
-    it { should have_selector("span", article2.comments.count) }
-
-    context "when click the Create Article link" do
-      before { click_link("Create Article") }
-
-      it { should have_title("New Article") }
-    end
-
-    context "when click the article link" do
-      before { click_link(article1.title) }
-
-      it { should have_title(article1.title) }
-    end
-
-    context "when click the Delete link" do
-      it "should delete the article" do
-        expect{ click_link "Delete", match: :first }.to change(Article, :count).by(-1)
-      end
-    end
-
-    context "when click the user link" do
-      before { click_link "You", match: :first }
-
-      it { should have_title(user1.name) }
-    end
-  end
-
   describe "new" do
     let!(:user) { FactoryGirl.create(:user) }
+    let!(:team) { FactoryGirl.create(:team) }
 
     before do
+      participate(team, user)
       login user
-      visit new_article_path
+      visit new_article_path(team)
     end
 
     it { should have_title("New Article") }
@@ -96,11 +52,13 @@ describe "Article Pages" do
 
   describe "show" do
     let!(:user)    { FactoryGirl.create(:user) }
-    let!(:article) { FactoryGirl.create(:article, user: user) }
+    let!(:team)    { FactoryGirl.create(:team) }
+    let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
 
     before do
+      participate(team, user)
       login user
-      visit article_path article
+      visit article_path team, article
     end
 
     it { should have_title(article.title) }
@@ -156,11 +114,13 @@ describe "Article Pages" do
 
   describe "edit" do
     let!(:user)   { FactoryGirl.create(:user) }
-    let(:article) { FactoryGirl.create(:article, user: user) }
+    let!(:team)   { FactoryGirl.create(:team) }
+    let(:article) { FactoryGirl.create(:article, user: user, team: team) }
 
     before do
+      participate(team, user)
       login user
-      visit edit_article_path article
+      visit edit_article_path(team, article)
     end
 
     it { should have_title("#{article.title} Edit") }

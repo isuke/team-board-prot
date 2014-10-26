@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :member_authorize, only: :show
 
   def index
     @teams = Team.all
@@ -24,6 +25,13 @@ class TeamsController < ApplicationController
 
     def team_params
       params.require(:team).permit(:name)
+    end
+
+    def member_authorize
+      unless Team.find(params[:id]).users.include? current_user
+        flash[:danger] = "Sorry. You can not view this team's page."
+        redirect_to root_path
+      end
     end
 
 

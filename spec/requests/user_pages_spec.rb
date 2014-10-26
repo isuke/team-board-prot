@@ -39,7 +39,7 @@ describe "User pages" do
       context "after saving the user" do
         before { click_button submit }
 
-        it { should have_title('Articles') }
+        it { should have_title('Teams') }
         it { should have_link('Log out') }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
       end
@@ -47,8 +47,9 @@ describe "User pages" do
   end
 
   describe "profile" do
-    let!(:user) { FactoryGirl.create(:user) }
-    let!(:article) { FactoryGirl.create(:article, user: user) }
+    let!(:user)    { FactoryGirl.create(:user) }
+    let!(:team)    { FactoryGirl.create(:team) }
+    let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
     let!(:comment) do
       FactoryGirl.create(:comment, article: article, user: user)
     end
@@ -56,6 +57,7 @@ describe "User pages" do
     let(:delete) { "Delete my account" }
 
     before do
+      participate(team, user)
       login user
       visit user_path(user)
     end
@@ -85,18 +87,19 @@ describe "User pages" do
       context "after delete the user" do
         let!(:other_user) { FactoryGirl.create(:user) }
         before do
+          participate(team, other_user)
           click_link(delete)
           login other_user
         end
 
         describe "the user's articles" do
           describe "index" do
-            before { visit articles_path }
+            before { visit team_path(team) }
             it { should have_content(article.title) }
             it { should have_content("Unkown") }
           end
           describe "show" do
-            before { visit article_path(article) }
+            before { visit article_path(team, article) }
             it { should have_title(article.title) }
             it { should have_content("Created by Unkown") }
             it { should have_content("Latest edited by Unkown") }
@@ -105,7 +108,7 @@ describe "User pages" do
 
         describe "the user's comments" do
           describe "index" do
-            before { visit article_path(article) }
+            before { visit article_path(team, article) }
             it { should have_content(article.title) }
             it { should have_content("Written by Unkown") }
           end

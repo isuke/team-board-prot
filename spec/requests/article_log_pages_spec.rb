@@ -4,15 +4,17 @@ describe "Article Log Pages" do
   subject { page }
 
   describe "index" do
-    let!(:user)         { FactoryGirl.create(:user) }
-    let!(:article)      { FactoryGirl.create(:article, user: user) }
+    let!(:user)    { FactoryGirl.create(:user) }
+    let!(:team)    { FactoryGirl.create(:team) }
+    let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
     let!(:article_log1) { article.logs[0] }
     let!(:article_log2) { article.logs[1] }
     let!(:article_log3) { article.logs[2] }
 
     before do
+      participate(team, user)
       login user
-      visit article_logs_path article
+      visit article_logs_path(team, article)
     end
 
     it { should have_title("Article Logs") }
@@ -37,12 +39,14 @@ describe "Article Log Pages" do
   end
 
   describe "show" do
-    let!(:user)        { FactoryGirl.create(:user) }
-    let!(:article_log) { FactoryGirl.create(:article, user: user).latest_log }
+    let!(:user)    { FactoryGirl.create(:user) }
+    let!(:team)    { FactoryGirl.create(:team) }
+    let!(:article_log) { FactoryGirl.create(:article, user: user, team: team).latest_log }
 
     before do
+      participate(team, user)
       login user
-      visit article_log_path(article_log)
+      visit article_log_path(team, article_log)
     end
 
     it { should have_title(article_log.title) }
@@ -59,13 +63,15 @@ describe "Article Log Pages" do
 
   describe "diff" do
     let!(:user)    { FactoryGirl.create(:user) }
-    let!(:article) { FactoryGirl.create(:article, user: user) }
+    let!(:team)    { FactoryGirl.create(:team) }
+    let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
     let!(:left_article_log)  { article.logs[0] }
     let!(:right_article_log) { article.logs[1] }
 
     before do
+      participate(team, user)
       login user
-      visit diff_articles_path(left_article_log, right_article_log)
+      visit diff_articles_path(team, left_article_log, right_article_log)
     end
 
     it do

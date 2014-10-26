@@ -10,7 +10,7 @@ describe "Team Pages" do
     let(:submit) { "Create new team" }
 
     before do
-      FactoryGirl.create(:teams_user, team: team, user: user)
+      participate(team, user)
       login user
       visit teams_path
     end
@@ -49,13 +49,15 @@ describe "Team Pages" do
   end
 
   describe "show" do
-    let!(:user1) { FactoryGirl.create(:user) }
-    let!(:user2) { FactoryGirl.create(:user) }
-    let!(:team)  { FactoryGirl.create(:team) }
+    let!(:user1)    { FactoryGirl.create(:user) }
+    let!(:user2)    { FactoryGirl.create(:user) }
+    let!(:team)     { FactoryGirl.create(:team) }
+    let!(:article1) { FactoryGirl.create(:article, user: user1, team: team) }
+    let!(:article2) { FactoryGirl.create(:article, user: user2, team: team) }
 
     before do
-      FactoryGirl.create(:teams_user, team: team, user: user1)
-      FactoryGirl.create(:teams_user, team: team, user: user2)
+      participate(team, user1)
+      participate(team, user2)
       login user1
       visit team_path(team)
     end
@@ -66,7 +68,38 @@ describe "Team Pages" do
     it { should have_content(user1.email) }
     it { should have_content(user2.name) }
     it { should have_content(user2.email) }
+    it { should have_link("Create Article") }
+    it { should have_link(article1.title) }
+    it { should have_link(article2.title) }
+    it { should have_link("Delete") }
+    it { should have_link("You")}
+    it { should have_link(user2.name)}
+    it { should have_selector("span", article1.comments.count) }
+    it { should have_selector("span", article2.comments.count) }
 
+    context "when click the Create Article link" do
+      before { click_link("Create Article") }
+
+      it { should have_title("New Article") }
+    end
+
+    context "when click the article link" do
+      before { click_link(article1.title) }
+
+      it { should have_title(article1.title) }
+    end
+
+    context "when click the Delete link" do
+      it "should delete the article" do
+        expect{ click_link "Delete", match: :first }.to change(Article, :count).by(-1)
+      end
+    end
+
+    context "when click the user link" do
+      before { click_link "You", match: :first }
+
+      it { should have_title(user1.name) }
+    end
   end
 
 end

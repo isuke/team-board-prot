@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   delete 'teams_users/:team_id/:user_id' => 'teams_users#destroy', as: :leave
 
   # articles
-  # scope :path => '/teams/:team_id' do
-    resources :articles do
+  scope :path => '/teams/:team_id' do
+    resources :articles, only: [:show, :new, :create, :edit, :update, :destroy] do
 
       collection do
         resources :logs, controller: :article_logs, as: :article_logs,  only: [:show]
@@ -34,9 +34,9 @@ Rails.application.routes.draw do
         resources :comments, only: :create
       end
     end
-  # end
+  end
 
 
-  root 'articles#index'
+  root 'teams#index'
 
 end

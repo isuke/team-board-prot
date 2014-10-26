@@ -8,6 +8,7 @@ FactoryGirl.define do
 
   factory :article do
     user
+    team
     sequence(:title) { |n| "Title-#{n}" }
     content "Lorem ipsum"
 

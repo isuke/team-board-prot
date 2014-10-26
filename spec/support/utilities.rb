@@ -10,3 +10,7 @@ def login(user, options={})
     click_button "Log in"
   end
 end
+
+def participate(team, user)
+  FactoryGirl.create(:teams_user, team: team, user: user)
+end

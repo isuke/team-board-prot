@@ -4,9 +4,11 @@ class Article < ActiveRecord::Base
   has_logs [:title, :content, :user],
            class_name: 'ArticleLog', dependent: :destroy
   belongs_to :user
+  belongs_to :team
   has_many :comments, dependent: :destroy
 
   validates :title, presence: true
+  validates :team, presence: true
 
   def create_user
     oldest_log.user

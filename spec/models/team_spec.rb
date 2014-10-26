@@ -10,4 +10,5 @@ describe "Team" do
   it { should respond_to(:name) }
   it { should respond_to(:teams_users) }
   it { should respond_to(:users) }
+  it { should respond_to(:articles) }
 end
