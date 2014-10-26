@@ -18,7 +18,7 @@
 
 <hr>
 
-<%= link_to "Edit", edit_article_path(@article),
+<%= link_to "Edit", edit_article_path(@team, @article),
             class: "btn bnt-xs btn-primary" %>
 <% if @article.logs.length > 1 %>
   <%= link_to "History",
@@ -26,10 +26,11 @@
                                  id2: @article.latest_log),
               class: "btn bnt-xs btn-defalut" %>
   <%= link_to "Show Logs",
-              article_logs_path(@article),
+              article_logs_path(@team, @article),
               class: "btn bnt-xs btn-defalut" %>
 <% end %>
-<%= link_to "Delete" , @article, class: "btn bnt-xs btn-warning",
+<%= link_to "Delete", article_path(@team, @article),
+            class: "btn bnt-xs btn-warning",
             method: :delete, data: { confirm: "You sure?" } %>
 
 <hr>

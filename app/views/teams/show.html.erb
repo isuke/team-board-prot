@@ -1,9 +1,11 @@
-<% provide(:title, "Articles") %>
+<% provide(:title, @team.name) %>
 
-<h2>Articles</h2>
+<h2><%= @team.name %></h2>
+
+<h3>Articles</h3>
 
 <%= link_to "Create Article",
-            new_article_path,
+            new_article_path(@team),
             class: "btn bnt-xs btn-primary" %>
 
 <table class="table table-striped">
@@ -14,10 +16,10 @@
     <th>Latest edit user</th>
     <th></th>
   </tr>
-  <% @articles.order("updated_at").reverse_order.each do |article| %>
+  <% @team.articles.order("updated_at").reverse_order.each do |article| %>
     <tr>
       <td>
-        <%= link_to article.title, article %>
+        <%= link_to article.title, article_path(@team, article) %>
         <span class="badge"><%= article.comments.count %></span>
       </td>
       <td><%= format_time article.updated_at, short: true %></td>
@@ -28,7 +30,7 @@
         <%= render 'users/link', user: article.latest_edit_user, show_img: true %>
       </td>
       <td>
-        <%= link_to article,
+        <%= link_to article_path(@team, article),
                     method: :delete,
                     data: { confirm: "You sure?" },
                     class: "btn btn-xs btn-warning" do %>
@@ -39,3 +41,19 @@
   <% end %>
 
 </table>
+
+<h3>Members</h3>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+  </tr>
+  <% @team.users.each do |user| %>
+    <tr>
+      <td><%= render 'users/link', user: user, show_img: true %></td>
+      <td><%= user.email %></td>
+    </tr>
+  <% end %>
+</table>
+

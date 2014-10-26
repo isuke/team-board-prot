@@ -12,6 +12,7 @@ describe Article do
   it { should respond_to(:create_user) }
   it { should respond_to(:edit_users) }
   it { should respond_to(:user) }
+  it { should respond_to(:team) }
 
   its(:title)   { should eq article.latest_log.title }
   its(:content) { should eq article.latest_log.content }

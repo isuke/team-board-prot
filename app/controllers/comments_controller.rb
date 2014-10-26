@@ -1,14 +1,17 @@
 class CommentsController < ApplicationController
+  include MemberAuthorize
+  before_action :member_authorize
+
   def create
     @article = Article.find(params[:id])
     @comment = Comment.new(comment_params)
     @comment.article = @article
     @comment.user    = current_user
     if @comment.save
-      flash[:success] = "Add Comment."
+      flash.now[:success] = "Add Comment."
     end
     respond_to do |format|
-      format.html { redirect_to @article }
+      format.html { redirect_to article_path(@team, @article) }
       format.js
     end
   end

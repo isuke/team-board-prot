@@ -1,4 +1,10 @@
 class User < ActiveRecord::Base
+  # has_many :articles # can not write this, because a article have not user_id.
+  has_many :article_logs, dependent: :nullify
+  has_many :comments    , dependent: :nullify
+  has_many :teams_users , dependent: :destroy
+  has_many :teams, through: :teams_users
+
   validates :name, presence: true,
             length: { maximum: 50 }
   validates :email, presence: true,
@@ -7,10 +13,6 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
 
   has_secure_password
-
-  # has_many :articles # can not write this, because a article have not user_id.
-  has_many :article_logs, dependent: :nullify
-  has_many :comments    , dependent: :nullify
 
   before_save { email.downcase! }
   before_create :create_remember_token
@@ -25,6 +27,14 @@ class User < ActiveRecord::Base
 
   def null_user?
     false
+  end
+
+  def participate(team)
+    teams_users.build(team_id: team.id)
+  end
+
+  def participate?(team)
+    teams.include? team
   end
 
   private

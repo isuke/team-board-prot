@@ -26,7 +26,7 @@ describe "Authentication" do
         click_button('Log in')
       end
 
-      it { should have_title("Articles") }
+      it { should have_title("Teams") }
       it { should_not have_button('Log in') }
     end
   end

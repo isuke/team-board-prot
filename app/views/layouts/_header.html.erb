@@ -7,6 +7,9 @@
             <p class="glyphicon glyphicon-home"> Top</p>
           <% end %>
         </li>
+        <% if @team && !@team.new_record? %>
+          <li><%= link_to @team.name, team_path(@team) %></li>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_login? %>

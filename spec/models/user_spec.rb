@@ -14,6 +14,9 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:article_logs) }
+  it { should respond_to(:teams) }
+  it { should respond_to(:participate) }
+  it { should respond_to(:participate?) }
 
   it { should be_valid }
 
@@ -120,6 +123,19 @@ describe User do
   describe "remember token" do
     before { user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "participate" do
+    let(:team) { FactoryGirl.create(:team) }
+
+    before do
+      user.save!
+      user.participate(team).save!
+    end
+
+    it "should be true" do
+      expect(user.participate? team).to be_truthy
+    end
   end
 
 end
