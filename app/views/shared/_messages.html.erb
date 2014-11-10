@@ -1,0 +1,11 @@
+<% if messages %>
+  <% messages.each do |key, value| %>
+    <% if value.any? %>
+      <%= content_tag(:div, class: "alert alert-#{key}") do %>
+        <% value.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

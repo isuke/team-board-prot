@@ -1,0 +1,21 @@
+<%= form_tag(members_path, class: "form-horizontal") do %>
+  <%= render 'shared/messages', messages: messages %>
+
+  <div class="form-group">
+    <%= label_tag :emails, nil, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= text_field_tag :emails, nil, autofocus: true, class: "form-control" %>
+      <span class="help-block">
+        Please enter comma-delimited e-mail addresses.<br>
+        ex) example-0@example.com, example-1@example.com
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= submit_tag "Add Members", class: "btn btn-primary" %>
+    </div>
+  </div>
+
+<% end %>

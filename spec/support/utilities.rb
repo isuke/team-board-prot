@@ -11,6 +11,6 @@ def login(user, options={})
   end
 end
 
-def participate(team, user)
-  FactoryGirl.create(:teams_user, team: team, user: user)
+def participate(team, user, role: :usual)
+  FactoryGirl.create(:teams_user, team: team, user: user, role: role)
 end

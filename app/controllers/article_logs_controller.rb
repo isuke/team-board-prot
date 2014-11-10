@@ -1,6 +1,6 @@
 class ArticleLogsController < ApplicationController
   include MemberAuthorize
-  before_action :member_authorize
+  before_action -> { member_authorize params[:team_id] }
 
   def index
     @article_logs = Article.find(params[:id]).logs

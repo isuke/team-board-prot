@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   # sessions
   resources :sessions, only: [:new, :create, :destroy]
-  match '/login' , to: 'sessions#new'     , via: 'get'
-  match '/logout', to: 'sessions#destroy' , via: 'delete'
+  match '/login' , to: 'sessions#new'    , via: 'get'
+  match '/logout', to: 'sessions#destroy', via: 'delete'
 
   # users
   resources :users, only: [:new, :create, :show, :destroy]
@@ -16,15 +16,18 @@ Rails.application.routes.draw do
 
   # teams
   resources :teams, only: [:index, :show, :create]
-  post   'teams_users/:team_id/:user_id' => 'teams_users#create', as: :participate
-  delete 'teams_users/:team_id/:user_id' => 'teams_users#destroy', as: :leave
 
-  # articles
   scope :path => '/teams/:team_id' do
+    # teams_users
+    get    'teams_users/index'    => 'teams_users#index'  , as: :members
+    post   'teams_users/:user_id' => 'teams_users#create' , as: :participate
+    delete 'teams_users/:user_id' => 'teams_users#destroy', as: :leave
+
+    # articles
     resources :articles, only: [:show, :new, :create, :edit, :update, :destroy] do
 
       collection do
-        resources :logs, controller: :article_logs, as: :article_logs,  only: [:show]
+        resources :logs, controller: :article_logs, as: :article_logs, only: [:show]
         get ':id1/:id2/diff' => 'article_logs#diff', as: :diff
         get 'diff'           => 'article_logs#diff'
       end

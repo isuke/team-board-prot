@@ -17,6 +17,23 @@ class User < ActiveRecord::Base
   before_save { email.downcase! }
   before_create :create_remember_token
 
+  def self.define_role_methods
+    define_method(:role) do |team|
+      team_user(team).role
+    end
+
+    TeamsUser.roles.keys.each do |role|
+      define_method(role + '?') do |team|
+        team_user(team).send(role.to_s + '?')
+      end
+      define_method(role + '!') do |team|
+        team_user(team).send(role.to_s + '!')
+      end
+    end
+  end
+  define_role_methods
+
+
   def self.new_remember_token
     SecureRandom.urlsafe_base64
   end
@@ -29,12 +46,21 @@ class User < ActiveRecord::Base
     false
   end
 
-  def participate(team)
-    teams_users.build(team_id: team.id)
+  def participate(team, role: :usual)
+    teams_users.build(team_id: team.id, role: role)
+  end
+
+  def leave(team)
+    TeamsUser.find_by(team_id: team.id,
+                      user_id: self.id).destroy
   end
 
   def participate?(team)
     teams.include? team
+  end
+
+  def team_user(team)
+    TeamsUser.find_by(user_id: self.id, team_id: team.id)
   end
 
   private

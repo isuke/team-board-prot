@@ -11,4 +11,8 @@ describe "Team" do
   it { should respond_to(:teams_users) }
   it { should respond_to(:users) }
   it { should respond_to(:articles) }
+  it { should respond_to(:add_member) }
+  it { should respond_to(:remove_member) }
+  it { should respond_to(:member?) }
+
 end
