@@ -43,5 +43,6 @@ FactoryGirl.define do
   factory :teams_user do
     team
     user
+    role :usual
   end
 end

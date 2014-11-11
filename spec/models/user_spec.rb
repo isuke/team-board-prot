@@ -14,9 +14,18 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:article_logs) }
+  it { should respond_to(:teams_users) }
+  it { should respond_to(:team_user) }
   it { should respond_to(:teams) }
   it { should respond_to(:participate) }
   it { should respond_to(:participate?) }
+  it { should respond_to(:role) }
+  it { should respond_to(:admin?) }
+  it { should respond_to(:admin!) }
+  it { should respond_to(:usual?) }
+  it { should respond_to(:usual!) }
+  it { should respond_to(:guest?) }
+  it { should respond_to(:guest!) }
 
   it { should be_valid }
 

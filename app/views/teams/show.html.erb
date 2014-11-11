@@ -44,16 +44,23 @@
 
 <h3>Members</h3>
 
+<% if current_user.admin? @team %>
+  <%= link_to "Edit Members",
+              members_path(@team),
+              class: "btn bnt-xs btn-primary" %>
+<% end %>
+
 <table class="table table-striped">
   <tr>
     <th>Name</th>
     <th>Email</th>
+    <th>Role</th>
   </tr>
-  <% @team.users.each do |user| %>
+  <% @team.users.order("role, teams_users.created_at").each do |user| %>
     <tr>
       <td><%= render 'users/link', user: user, show_img: true %></td>
       <td><%= user.email %></td>
+      <td><%= user.team_user(@team).role %></td>
     </tr>
   <% end %>
 </table>
-

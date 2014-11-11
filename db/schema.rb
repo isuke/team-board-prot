@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021160202) do
+ActiveRecord::Schema.define(version: 20141029165902) do
 
   create_table "article_logs", force: true do |t|
     t.integer  "article_id", null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20141021160202) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role",       default: 30, null: false
   end
 
   add_index "teams_users", ["team_id", "user_id"], name: "index_teams_users_on_team_id_and_user_id", unique: true

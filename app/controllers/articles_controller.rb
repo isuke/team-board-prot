@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   include MemberAuthorize
-  before_action :member_authorize
+  before_action -> { member_authorize params[:team_id] }
 
   def show
     @article = Article.find(params[:id])

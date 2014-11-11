@@ -1,14 +1,34 @@
 class TeamsUsersController < ApplicationController
+  include MemberAuthorize
+  before_action -> { member_authorize params[:team_id], only: :admin }
+
+  def index
+  end
+
   def create
-    team = Team.find(params[:team_id])
-    user = User.find(params[:user_id])
-    user.participate(team).save
-    redirect_to teams_path
+    emails = params[:emails].split /\s*,\s*/
+
+    @messages = {success: [], danger: []}
+    emails.each do |email|
+      if user = User.find_by(email: email)
+        if @team.member? user
+          @messages[:danger] << "#{email} : This email's user is already #{@team.name}'s member."
+        elsif @team.add_member(user, role: :usual).save
+            @messages[:success] << "#{email} : success"
+        else
+          @messages[:danger] << "#{email} : Unkown error."
+        end
+      else
+        @messages[:danger] << "#{email} : Do not found this email's user."
+      end
+    end
+    render 'index'
   end
 
   def destroy
-    TeamsUser.find_by(team_id: params[:team_id],
-                      user_id: params[:user_id]).destroy
-    redirect_to teams_path
+    user = User.find(params[:user_id])
+    @team.remove_member(user)
+    flash[:success] = "Remove '#{user.name}'."
+    render 'index'
   end
 end

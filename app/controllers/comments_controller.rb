@@ -1,12 +1,11 @@
 class CommentsController < ApplicationController
   include MemberAuthorize
-  before_action :member_authorize
+  before_action -> { member_authorize params[:team_id] }
 
   def create
     @article = Article.find(params[:id])
-    @comment = Comment.new(comment_params)
-    @comment.article = @article
-    @comment.user    = current_user
+    @comment = @article.comments.build(comment_params)
+    @comment.user = current_user
     if @comment.save
       flash.now[:success] = "Add Comment."
     end

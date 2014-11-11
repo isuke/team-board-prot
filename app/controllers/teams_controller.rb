@@ -1,8 +1,9 @@
 class TeamsController < ApplicationController
-  before_action :member_authorize, only: :show
+  include MemberAuthorize
+  before_action -> { member_authorize params[:id] }, only: :show
 
   def index
-    @teams = Team.all
+    @teams = current_user.teams
     @team = Team.new
   end
 
@@ -13,7 +14,7 @@ class TeamsController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       @team = Team.create(team_params)
-      current_user.participate(@team).save!
+      current_user.participate(@team, role: :admin).save!
     end
     flash[:success] = "Create #{@team.name}."
     redirect_to teams_path
@@ -26,14 +27,6 @@ class TeamsController < ApplicationController
     def team_params
       params.require(:team).permit(:name)
     end
-
-    def member_authorize
-      unless Team.find(params[:id]).users.include? current_user
-        flash[:danger] = "Sorry. You can not view this team's page."
-        redirect_to root_path
-      end
-    end
-
 
 end
 

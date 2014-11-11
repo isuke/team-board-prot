@@ -1,0 +1,35 @@
+<% provide(:title, "#{@team.name} members") %>
+
+<h2><%= @team.name %> Members</h2>
+
+<h3>Add Members</h3>
+
+<%= render 'participation_form', messages: @messages %>
+
+<h3>Members</h3>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th></th>
+  </tr>
+  <% @team.users.order("role, teams_users.created_at").each do |user| %>
+    <tr>
+      <td><%= render 'users/link', user: user, show_img: true %></td>
+      <td><%= user.email %></td>
+      <td><%= user.team_user(@team).role %></td>
+      <td>
+        <%= link_to leave_path(@team, user),
+                    method: :delete,
+                    data: { confirm: "You sure?" },
+                    class: "btn btn-warning btn-xs" do %>
+          <span class="glyphicon glyphicon-remove"></span>Remove
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
