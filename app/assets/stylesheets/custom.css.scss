@@ -1,5 +1,6 @@
 @import "bootstrap";
 $article-content-height: 400px;
+$monospace-font: Osaka-mono, "MS Gothic", monospace;
 
 /* Home */
 .center {
@@ -9,11 +10,13 @@ $article-content-height: 400px;
 /* Article */
 .article-content {
   textarea {
+    font-family: $monospace-font;
     height: $article-content-height;
     overflow: auto;
   }
 
   .formated {
+    font-family: $monospace-font;
     height: $article-content-height;
     overflow: auto;
   }
