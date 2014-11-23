@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
   include MemberAuthorize
-  before_action -> { member_authorize params[:id] }, only: :show
+  before_action -> { @team = Team.find(params[:id]) }, only: :show
+  before_action -> { member_authorize @team }, only: :show
 
   def index
     @teams = current_user.teams
@@ -8,7 +9,6 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
   end
 
   def create

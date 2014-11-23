@@ -55,56 +55,115 @@ describe "Team" do
     let!(:article2) { FactoryGirl.create(:article, user: user2, team: team) }
 
     before do
-      participate(team, user1)
-      participate(team, user2)
-      login user1
-      visit team_path(team)
+      participate(team, user1, role: :admin)
+      participate(team, user2, role: :usual)
     end
 
-    it { should have_title(team.name) }
-    it { should have_content(team.name) }
-
-    describe "articles" do
-      it { should have_content("You") }
-      it { should have_content(user1.email) }
-      it { should have_content(user2.name) }
-      it { should have_content(user2.email) }
-      it { should have_link("Create Article") }
-      it { should have_link(article1.title) }
-      it { should have_link(article2.title) }
-      it { should have_link("Delete") }
-
-      context "when click the Create Article link" do
-        before { click_link("Create Article") }
-
-        it { should have_title("New Article") }
+    context "when admin user" do
+      before do
+        login user1
+        visit team_path(team)
       end
 
-      context "when click the article link" do
-        before { click_link(article1.title) }
+      it { should have_title(team.name) }
+      it { should have_content(team.name) }
 
-        it { should have_title(article1.title) }
+      describe "articles" do
+        it { should have_content("You") }
+        it { should have_content(user1.email) }
+        it { should have_content(user2.name) }
+        it { should have_content(user2.email) }
+        it { should have_link("Create Article") }
+        it { should have_link(article1.title) }
+        it { should have_link(article2.title) }
+        it { should have_link("Delete") }
+
+        context "when click the Create Article link" do
+          before { click_link("Create Article") }
+
+          it { should have_title("New Article") }
+        end
+
+        context "when click the article link" do
+          before { click_link(article1.title) }
+
+          it { should have_title(article1.title) }
+        end
+
+        context "when click the Delete link" do
+          it "should delete the article" do
+            expect{ click_link "Delete", match: :first }.to change(Article, :count).by(-1)
+          end
+        end
       end
 
-      context "when click the Delete link" do
-        it "should delete the article" do
-          expect{ click_link "Delete", match: :first }.to change(Article, :count).by(-1)
+      describe "members" do
+        it { should have_link("Edit Members") }
+        it { should have_link("You")}
+        it { should have_link(user2.name)}
+        it { should have_selector("span", article1.comments.count) }
+        it { should have_selector("span", article2.comments.count) }
+
+        context "when click edit members" do
+          before { click_link "Edit Members" }
+
+          it { should have_title("members") }
+        end
+
+        context "when click the user link" do
+          before { click_link "You", match: :first }
+
+          it { should have_title(user1.name) }
         end
       end
 
     end
 
-    describe "members" do
-      it { should have_link("You")}
-      it { should have_link(user2.name)}
-      it { should have_selector("span", article1.comments.count) }
-      it { should have_selector("span", article2.comments.count) }
-
-      context "when click the user link" do
-        before { click_link "You", match: :first }
-
-        it { should have_title(user1.name) }
+    context "when usual user" do
+      before do
+        login user2
+        visit team_path(team)
       end
+
+      it { should have_title(team.name) }
+      it { should have_content(team.name) }
+
+      describe "articles" do
+        it { should     have_content("You") }
+        it { should     have_content(user1.email) }
+        it { should     have_content(user2.name) }
+        it { should     have_content(user2.email) }
+        it { should     have_link("Create Article") }
+        it { should     have_link(article1.title) }
+        it { should     have_link(article2.title) }
+        it { should_not have_link("Delete") }
+
+        context "when click the Create Article link" do
+          before { click_link("Create Article") }
+
+          it { should have_title("New Article") }
+        end
+
+        context "when click the article link" do
+          before { click_link(article1.title) }
+
+          it { should have_title(article1.title) }
+        end
+      end
+      describe "members" do
+        it { should_not have_link("Edit Members") }
+        it { should     have_link("You")}
+        it { should     have_link(user2.name)}
+        it { should     have_selector("span", article1.comments.count) }
+        it { should     have_selector("span", article2.comments.count) }
+
+        context "when click the user link" do
+          before { click_link "You", match: :first }
+
+          it { should have_title(user2.name) }
+        end
+      end
+
     end
   end
 

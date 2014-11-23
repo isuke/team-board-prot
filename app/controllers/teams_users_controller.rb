@@ -1,6 +1,7 @@
 class TeamsUsersController < ApplicationController
   include MemberAuthorize
-  before_action -> { member_authorize params[:team_id], only: :admin }
+  before_action -> { @team = Team.find(params[:team_id]) }
+  before_action -> { member_authorize @team, only: :admin }
 
   def index
   end

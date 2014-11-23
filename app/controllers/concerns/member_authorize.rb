@@ -3,15 +3,13 @@ module MemberAuthorize
 
   private
 
-    def member_authorize(team_id, only: nil)
-      @team = Team.find(team_id)
-      if @team.users.include? current_user
-        if only.present?
-          if (only.respond_to?(:map) && !only.map(&:to_sym).include?(current_user.role(@team).to_sym)) ||
-            (only.to_sym != current_user.role(@team).to_sym)
-            flash[:danger] = "Sorry. You can not view this page."
-            redirect_to team_path(@team)
-          end
+    def member_authorize(team, only: nil, expect: nil)
+      if team.users.include? current_user
+        current_user_role = current_user.role(team).to_sym
+        if (  only.present? && (  only.respond_to?(:map) ?   !only.map(&:to_sym).include?(current_user_role) :   only.to_sym != current_user_role)) ||
+           (expect.present? && (expect.respond_to?(:map) ?  expect.map(&:to_sym).include?(current_user_role) : expect.to_sym == current_user_role))
+          flash[:danger] = "Sorry. You don't have permission of this action."
+          redirect_to team_path(team)
         end
       else
         flash[:danger] = "Sorry. You can not view this team's page."
