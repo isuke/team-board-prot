@@ -2,7 +2,7 @@ class AddTeamIdToArticles < ActiveRecord::Migration
   def up
     add_column :articles, :team_id, :integer
 
-    set_team_id
+    set_team_id if Article.any?
 
     change_column :articles, :team_id, :integer, null: false
   end

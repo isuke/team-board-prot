@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe "Article Pages" do
+describe "Article" do
   subject { page }
 
-  describe "new" do
+  describe "new page" do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:team) { FactoryGirl.create(:team) }
 
@@ -50,7 +50,7 @@ describe "Article Pages" do
     end
   end
 
-  describe "show" do
+  describe "show page" do
     let!(:user)    { FactoryGirl.create(:user) }
     let!(:team)    { FactoryGirl.create(:team) }
     let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
@@ -112,7 +112,7 @@ describe "Article Pages" do
 
   end
 
-  describe "edit" do
+  describe "edit page" do
     let!(:user)   { FactoryGirl.create(:user) }
     let!(:team)   { FactoryGirl.create(:team) }
     let(:article) { FactoryGirl.create(:article, user: user, team: team) }

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe "User pages" do
+describe "User" do
 
   subject { page }
 
-  describe "sgin up" do
+  describe "sgin up page" do
     before { visit signup_path }
 
     it { should have_title('Sign up') }
@@ -46,7 +46,7 @@ describe "User pages" do
     end
   end
 
-  describe "profile" do
+  describe "profile page" do
     let!(:user)    { FactoryGirl.create(:user) }
     let!(:team)    { FactoryGirl.create(:team) }
     let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
