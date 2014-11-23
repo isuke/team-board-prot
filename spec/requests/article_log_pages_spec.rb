@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe "Article Log Pages" do
+describe "Article Log" do
   subject { page }
 
-  describe "index" do
+  describe "index page" do
     let!(:user)    { FactoryGirl.create(:user) }
     let!(:team)    { FactoryGirl.create(:team) }
     let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
@@ -38,7 +38,7 @@ describe "Article Log Pages" do
 
   end
 
-  describe "show" do
+  describe "show page" do
     let!(:user)    { FactoryGirl.create(:user) }
     let!(:team)    { FactoryGirl.create(:team) }
     let!(:article_log) { FactoryGirl.create(:article, user: user, team: team).latest_log }
@@ -61,7 +61,7 @@ describe "Article Log Pages" do
     end
   end
 
-  describe "diff" do
+  describe "diff page" do
     let!(:user)    { FactoryGirl.create(:user) }
     let!(:team)    { FactoryGirl.create(:team) }
     let!(:article) { FactoryGirl.create(:article, user: user, team: team) }

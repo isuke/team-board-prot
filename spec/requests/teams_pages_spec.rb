@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe "Team Pages" do
+describe "Team" do
   subject { page }
 
-  describe "index" do
+  describe "index page" do
     let!(:user)       { FactoryGirl.create(:user) }
     let!(:team1)      { FactoryGirl.create(:team) }
     let!(:team2)      { FactoryGirl.create(:team) }
@@ -47,7 +47,7 @@ describe "Team Pages" do
 
   end
 
-  describe "show" do
+  describe "show page" do
     let!(:user1)    { FactoryGirl.create(:user) }
     let!(:user2)    { FactoryGirl.create(:user) }
     let!(:team)     { FactoryGirl.create(:team) }

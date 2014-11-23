@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "Team Users" do
   subject { page }
 
-  describe "members pages" do
+  describe "members page" do
 
     let!(:user1) { FactoryGirl.create(:user) }
     let!(:user2) { FactoryGirl.create(:user) }
