@@ -56,7 +56,7 @@ describe "Article" do
     let!(:article) { FactoryGirl.create(:article, user: user, team: team) }
 
     before do
-      participate(team, user)
+      participate(team, user, role: :admin)
       login user
       visit article_path team, article
     end

@@ -1,6 +1,9 @@
 class ArticlesController < ApplicationController
   include MemberAuthorize
-  before_action -> { member_authorize params[:team_id] }
+  before_action -> { @team = Team.find(params[:team_id]) }
+  before_action -> { member_authorize @team                 }, only:  :show
+  before_action -> { member_authorize @team, expect: :guest }, only: [:new, :create, :edit, :update]
+  before_action -> { member_authorize @team, only:   :admin }, only:  :destroy
 
   def show
     @article = Article.find(params[:id])

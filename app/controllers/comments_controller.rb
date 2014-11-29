@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   include MemberAuthorize
-  before_action -> { member_authorize params[:team_id] }
+  before_action -> { @team = Team.find(params[:team_id]) }
+  before_action -> { member_authorize @team }
 
   def create
     @article = Article.find(params[:id])

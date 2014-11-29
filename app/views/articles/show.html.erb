@@ -18,8 +18,10 @@
 
 <hr>
 
-<%= link_to "Edit", edit_article_path(@team, @article),
-            class: "btn bnt-xs btn-primary" %>
+<% unless current_user.guest?(@team) %>
+  <%= link_to "Edit", edit_article_path(@team, @article),
+              class: "btn bnt-xs btn-primary" %>
+<% end %>
 <% if @article.logs.length > 1 %>
   <%= link_to "History",
               diff_articles_path(id1: @article.latest_log.prev,
@@ -29,10 +31,11 @@
               article_logs_path(@team, @article),
               class: "btn bnt-xs btn-defalut" %>
 <% end %>
-<%= link_to "Delete", article_path(@team, @article),
-            class: "btn bnt-xs btn-warning",
-            method: :delete, data: { confirm: "You sure?" } %>
-
+<% if current_user.admin?(@team) %>
+  <%= link_to "Delete", article_path(@team, @article),
+              class: "btn bnt-xs btn-warning",
+              method: :delete, data: { confirm: "You sure?" } %>
+<% end %>
 <hr>
 
 <%= markdown @article.content %>

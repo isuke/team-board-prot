@@ -4,9 +4,11 @@
 
 <h3>Articles</h3>
 
-<%= link_to "Create Article",
-            new_article_path(@team),
-            class: "btn bnt-xs btn-primary" %>
+<% unless current_user.guest?(@team) %>
+  <%= link_to "Create Article",
+              new_article_path(@team),
+              class: "btn bnt-xs btn-primary" %>
+<% end %>
 
 <table class="table table-striped">
   <tr>
@@ -30,11 +32,13 @@
         <%= render 'users/link', user: article.latest_edit_user, show_img: true %>
       </td>
       <td>
-        <%= link_to article_path(@team, article),
-                    method: :delete,
-                    data: { confirm: "You sure?" },
-                    class: "btn btn-xs btn-warning" do %>
-          <span class="glyphicon glyphicon-remove"></span>Delete
+        <% if current_user.admin?(@team) %>
+          <%= link_to article_path(@team, article),
+                      method: :delete,
+                      data: { confirm: "You sure?" },
+                      class: "btn btn-xs btn-warning" do %>
+            <span class="glyphicon glyphicon-remove"></span>Delete
+          <% end %>
         <% end %>
       </td>
     </tr>
