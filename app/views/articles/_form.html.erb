@@ -5,29 +5,23 @@
     </span>
     <%= f.text_field :title, class: "form-control" %>
   </div>
-  <div class="article-content">
+  <div id="marked", class="article-content">
     <div class="row">
       <div class="col-sm-6">
         <div class="content">
           <%= f.label :content, hidden: true %>
-          <%= f.text_area :content, class: "form-control" %>
+          <%= f.text_area :content, class: "form-control", "v-model" => "input" %>
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="formated">
-          <%= f.label :formated, hidden: true %>
-          <%= markdown @article.content %>
+        <div class="formatted_content">
+          <%= f.label :formatted_content, hidden: true %>
+          <%= f.hidden_field :formatted_content, value: "{{input | marked}}" %>
+          <div v-html="input | marked"></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <%= f.submit action_name, class: "btn btn-primary" %>
-    </div>
-    <div class="col-sm-6">
-      <%= f.submit "Preview", class: "btn btn-primary", name: "preview" %>
-    </div>
-  </div>
+  <%= f.submit action_name, class: "btn btn-primary btn-lg" %>
 </div>
 

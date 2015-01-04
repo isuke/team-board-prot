@@ -69,21 +69,26 @@ def make_team_users(team=nil, users=[])
 end
 
 def make_article(team, users, title="Title")
+  content = Faker::Lorem.paragraph(5)
   article = Article.create!(title: "#{title}-0",
-                            content: Faker::Lorem.paragraph(5),
+                            content: content,
                             team: team,
-                            user: users.delete_at(0))
+                            user: users.delete_at(0),
+                            formatted_content: content)
   users.each_with_index do |user, m|
+    content += Faker::Lorem.paragraph(1)
     article.update_attributes!(title: "#{title}-#{m+1}",
-                               content: Faker::Lorem.paragraph(5),
+                               content: content,
                                team: team,
-                               user: user)
+                               user: user,
+                               formatted_content: content)
   end
   article
 end
 
 def make_comment(article, user)
-  comment = article.comments.build(user_id: user.id, content: Faker::Lorem.sentence)
+  content = Faker::Lorem.sentence
+  comment = article.comments.build(user_id: user.id, content: content, formatted_content: content)
   comment.save!
   comment
 end

@@ -1,5 +1,6 @@
 @import "bootstrap";
 $article-content-height: 400px;
+$comment-content-height: 200px;
 $monospace-font: Osaka-mono, "MS Gothic", monospace;
 
 /* Home */
@@ -15,9 +16,26 @@ $monospace-font: Osaka-mono, "MS Gothic", monospace;
     overflow: auto;
   }
 
-  .formated {
+  .formatted_content {
     font-family: $monospace-font;
     height: $article-content-height;
+    overflow: auto;
+  }
+}
+
+/* Comment */
+.comment-content {
+  textarea {
+    width: 100%;
+    font-family: $monospace-font;
+    height: $comment-content-height;
+    overflow: auto;
+  }
+
+  .formatted_content {
+    background-color: #ffffff;
+    font-family: $monospace-font;
+    height: $comment-content-height;
     overflow: auto;
   }
 }

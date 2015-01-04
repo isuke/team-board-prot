@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require vue
+//= require marked
 //= require bootstrap
-//= require_tree.
+//= require_tree .

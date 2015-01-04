@@ -1,7 +1,19 @@
 <%= form_for comment, remote: true do |f| %>
   <%= render 'shared/error_messages', f: f %>
-  <%= f.label :content, hidden: true %>
-  <%= f.text_area :content %>
-  <br>
+  <div id="marked", class="comment-content">
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.label :content, hidden: true %>
+        <%= f.text_area :content, "v-model" => "input" %>
+      </div>
+      <div class="col-sm-6">
+        <div class="formatted_content">
+          <%= f.label :formatted_content, hidden: true %>
+          <%= f.hidden_field :formatted_content, value: "{{input | marked}}" %>
+          <div v-html="input | marked"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <%= f.submit "Comment", class: "btn btn-primary" %>
 <% end %>

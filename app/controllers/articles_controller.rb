@@ -18,7 +18,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @article.user = current_user
     @article.team = @team
-    if !params["preview"] && @article.save
+    if @article.save
       flash[:success] = "Create '#{@article.title}'"
       redirect_to article_path(@team, @article)
     else
@@ -34,7 +34,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.attributes = article_params
     @article.user = current_user
-    if !params["preview"] && @article.save
+    if @article.save
       flash[:success] = "Save Article '#{@article.title}'."
       redirect_to article_path(@team, @article)
     else
@@ -53,7 +53,7 @@ class ArticlesController < ApplicationController
   private
 
     def article_params
-      params.require(:article).permit(:title, :content)
+      params.require(:article).permit(:title, :content, :formatted_content)
     end
 
 end

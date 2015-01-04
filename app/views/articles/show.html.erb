@@ -38,14 +38,14 @@
 <% end %>
 <hr>
 
-<%= markdown @article.content %>
+<%= @article.formatted_content.try(:html_safe) %>
 
 <div class="panel panel-default">
   <div class="panel-heading">Comments</div>
   <div id="comments" class="panel-body">
     <%= render 'comments/index', comments: @article.comments %>
   </div>
-  <div class="panel-footer">
+  <div class="panel-body">
     <%= render 'comments/new', comment: @comment %>
   </div>
 </div>

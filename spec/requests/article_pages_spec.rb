@@ -15,7 +15,6 @@ describe "Article" do
 
     it { should have_title("New Article") }
     it { should have_button("Create") }
-    it { should have_button("Preview") }
 
     context "when click the save button" do
       let(:article_title)   { "Example Title" }
@@ -26,6 +25,8 @@ describe "Article" do
         fill_in "Content", with: article_content
       end
 
+      # it { should have_selector('h1', text: "Example Content") }
+
       it "should create a article" do
         expect{ click_button "Create" }.to change(Article, :count).by(1)
       end
@@ -34,19 +35,8 @@ describe "Article" do
         before { click_button "Create" }
 
         it { should have_title(article_title) }
+        # it { should have_selector('h1', text: "Example Content") }
       end
-    end
-
-    context "when click the preview button" do
-      let(:article_content) { "# Example Content" }
-
-      before do
-        fill_in "Content", with: article_content
-        click_button "Preview"
-      end
-
-      it { should have_title("New Article") }
-      it { should have_selector('h1', text: "Example Content") }
     end
   end
 
@@ -125,11 +115,10 @@ describe "Article" do
 
     it { should have_title("#{article.title} Edit") }
     it { should have_button("Save") }
-    it { should have_button("Preview") }
 
     context "when the save button click" do
       let(:article_title)   { "Example Title" }
-      let(:article_content) { "Example Content" }
+      let(:article_content) { "# Example Content" }
 
       before do
         fill_in "Title"  , with: article_title
@@ -146,20 +135,8 @@ describe "Article" do
         before { click_button "Save" }
 
         it { should have_title(article_title) }
-        it { should have_content(article_content) }
+        # it { should have_selector('h1', text: article_content) }
       end
-    end
-
-    context "when click the preview button" do
-      let(:article_content) { "# Example Content" }
-
-      before do
-        fill_in "Content", with: article_content
-        click_button "Preview"
-      end
-
-      it { should have_title("#{article.title} Edit") }
-      it { should have_selector('h1', text: "Example Content") }
     end
   end
 

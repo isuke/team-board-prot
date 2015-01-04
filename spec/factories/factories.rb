@@ -11,12 +11,14 @@ FactoryGirl.define do
     team
     sequence(:title) { |n| "Title-#{n}" }
     content "Lorem ipsum"
+    formatted_content "Lorem ipsum"
 
     after(:create) do |article|
       original_title = article.title
       2.times do |i|
         article.update_attributes!(title: "#{original_title}-#{i}",
-                                   content: "Lorem ipsum #{i}")
+                                   content:           "Lorem ipsum #{i}",
+                                   formatted_content: "Lorem ipsum #{i}")
       end
       2.times do |i|
         create(:comment, article: article, user: create(:user))
@@ -27,7 +29,8 @@ FactoryGirl.define do
   factory :comment do
     article
     user
-    content "Lorem ipsum"
+    content           "Lorem ipsum"
+    formatted_content "Lorem ipsum"
   end
 
   factory :team do

@@ -1,7 +1,7 @@
 class Article < ActiveRecord::Base
   include HasLogs
 
-  has_logs [:title, :content, :user],
+  has_logs [:title, :content, :user, :formatted_content],
            class_name: 'ArticleLog', dependent: :destroy
   belongs_to :user
   belongs_to :team
