@@ -17,4 +17,4 @@
 
 <hr>
 
-<%= markdown @article_log.content %>
+<%= @article_log.formatted_content.html_safe %>

@@ -10,7 +10,7 @@
           <%= render 'users/link', user: comment.user, show_img: false %>
         </h5>
         <div class="content">
-          <%= markdown comment.content %>
+          <%= comment.formatted_content.html_safe %>
         </div>
       </div>
     </li>

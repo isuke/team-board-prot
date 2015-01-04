@@ -11,6 +11,7 @@ describe Article do
   it { should     respond_to(:originator) }
   it { should     respond_to(:title) }
   it { should     respond_to(:content) }
+  it { should     respond_to(:formatted_content) }
   it { should     respond_to(:created_at) }
   it { should_not respond_to(:updated_at) }
   it { should     respond_to(:next) }

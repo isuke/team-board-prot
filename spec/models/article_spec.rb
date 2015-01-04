@@ -14,9 +14,10 @@ describe Article do
   it { should respond_to(:user) }
   it { should respond_to(:team) }
 
-  its(:title)   { should eq article.latest_log.title }
-  its(:content) { should eq article.latest_log.content }
-  its(:create_user) { should eq article.oldest_log.user }
+  its(:title)             { should eq article.latest_log.title }
+  its(:content)           { should eq article.latest_log.content }
+  its(:formatted_content) { should eq article.latest_log.formatted_content }
+  its(:create_user)       { should eq article.oldest_log.user }
 
   context "when deleted" do
     let!(:logs_count) { article.logs.count }

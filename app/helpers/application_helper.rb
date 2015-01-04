@@ -16,16 +16,6 @@ module ApplicationHelper
     end
   end
 
-  def markdown(text)
-    return '' if text.blank?
-    renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
-    markdown = Redcarpet::Markdown.new(renderer, tables: true,
-                                           fenced_code_blocks: true,
-                                           autolink: true,
-                                           strikethrough: true)
-    markdown.render(text).html_safe
-  end
-
   def diff(text1, text2)
     Diffy::Diff.new(text1, text2, include_plus_and_minus_in_html: true).to_s
   end
